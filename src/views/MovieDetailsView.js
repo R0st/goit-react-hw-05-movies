@@ -1,32 +1,32 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {  useParams } from "react-router-dom";
 import PageHeading from "../components/PageHeading/PageHeading";
-// import * as movieApi from '../services/movieApi'
+import * as movieApi from '../services/movieApi'
 // import MoviesCredits from './MoviesCredits';
 
 export default function MovieDetailsView() {
-    // const {movieId} = useParams();
-    // const [movie, setMovie] = useState(null);
-    const params = useParams();
-    console.log(params)
+    
+    const [movie, setMovie] = useState(null);
+    const {movieId} = useParams();
+    console.log(movieId)
 
-    // useEffect(() => {
-    //     movieApi.fetchGetMoviesDetails(movieId).then(setMovie);
-    // }, [movieId])
+    useEffect(() => {
+        movieApi.fetchGetMoviesDetails(movieId).then(setMovie);
+    }, [movieId])
     
     return (
         <>
             {/* <PageHeading text={`Movie ${movieId}`} /> */}
-            <PageHeading text={`Movie `} />
-            {/* {movie && (
+            <PageHeading text={`Movie ${movieId}`} />
+            {movie && ( 
                 <>
-                    <img src={movie.poster_path} alt={movie.title} />
+                    <img src={movie.backdrop_path} alt={movie.title} />
                     <h2>{movie.title}</h2>
                     <p>Release date: {movie.release_date}</p>
                     <p>Rating: {movie.vote_average}</p>
                     <p>Overview: {movie.overview}</p>
                 </>
-            )} */}
+            )}
             {/* <Route path="/movies/:movieId">
                 <MoviesCredits />
             </Route> */}

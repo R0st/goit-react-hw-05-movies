@@ -22,7 +22,7 @@ export default function App() {
                     <MovieDetailsView />
                 </Route>
 
-                <Route path="/movies/:movieId"> 
+                <Route path="/movies/:movieId" > 
                     <MovieDetailsView />
                 </Route>
                 

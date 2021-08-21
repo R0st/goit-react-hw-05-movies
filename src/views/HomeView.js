@@ -19,11 +19,17 @@ export default function HomeView() {
             
             {movies && (
                 <ul>
-                    {movies.results.map(movie =>
+                    {movies.results.map(movie =>(
                         <li key={movie.id}>
-                            <Link to={`${url}/${movie.id}`}>{movie.title}</Link>
+                            {/* <Link to={{
+                                pathname: `${url}movies/${movie.id}`,
+                                state: { from: '/' },
+                            }}>
+                                <h2>{movie.title}</h2>
+                            </Link> */}
+                            <Link to={`${url}movies/${movie.id}`}>{movie.title}</Link>
                         </li>
-                    )}
+                    ))}
                 </ul>
             )}
         </>

@@ -10,7 +10,7 @@ async function fetchWithErrorHanding(url = '', config = {}) {
 }
 
 export function fetchTrendingMovies() {
-    return fetchWithErrorHanding(`https://api.themoviedb.org/3/trending/all/day?api_key=${KEY}`)
+    return fetchWithErrorHanding(`https://api.themoviedb.org/3/trending/movie/day?api_key=${KEY}`)
 }
 
 export function fetchSearchMovies() {
@@ -25,7 +25,7 @@ export function fetchGetMoviesCredits(movieId) {
     return fetchWithErrorHanding(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${KEY}&language=en-US`)
 }
 
-export function fetchGetMoviesRewiews() {
-    return fetchWithErrorHanding(`https://api.themoviedb.org/3/movie/{movie_id}/reviews?api_key=${KEY}&language=en-US&page=1`)
+export function fetchGetMoviesRewiews(movieId) {
+    return fetchWithErrorHanding(`https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=${KEY}&language=en-US`)
 }
 

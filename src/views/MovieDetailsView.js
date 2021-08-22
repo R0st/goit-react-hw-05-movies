@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
-import {  useParams } from "react-router-dom";
+import {  NavLink, useParams } from "react-router-dom";
 import PageHeading from "../components/PageHeading/PageHeading";
-import * as movieApi from '../services/movieApi'
-// import MoviesCredits from './MoviesCredits';
+import * as movieApi from '../services/movieApi';
+import { Route } from "react-router-dom";
+import Cast from "./Cast";
+import Reviews from "./Reviews";
+import styles from '../components/Navigation/Navigation.module.css'
 
 export default function MovieDetailsView() {
     
     const [movie, setMovie] = useState(null);
     const {movieId} = useParams();
-    console.log(movieId)
+    // console.log(movieId)
 
     useEffect(() => {
         movieApi.fetchGetMoviesDetails(movieId).then(setMovie);
@@ -20,16 +23,45 @@ export default function MovieDetailsView() {
             <PageHeading text={`Movie ${movieId}`} />
             {movie && ( 
                 <>
-                    <img src={movie.backdrop_path} alt={movie.title} />
+                    <img src={movie.poster_path} alt={movie.title} />
                     <h2>{movie.title}</h2>
                     <p>Release date: {movie.release_date}</p>
                     <p>Rating: {movie.vote_average}</p>
                     <p>Overview: {movie.overview}</p>
                 </>
             )}
-            {/* <Route path="/movies/:movieId">
-                <MoviesCredits />
-            </Route> */}
+            <hr />
+
+            {/* <NavLink to="/movies/:movieId/:cast">Cast</NavLink> */}
+
+            <NavLink
+                to={{
+                    pathname: `/movies/${movieId}/cast`,
+                    state: '/'
+                }} > Cast
+            </NavLink>
+
+            <Route
+                path="/movies/:movieId/:cast"
+                className={styles.link}
+                activeClassName={styles.activeLink}>
+                {movie && <Cast movie={movie} />}
+            </Route>
+
+            <NavLink
+                to={{
+                    pathname: `/movies/${movieId}/reviews`,
+                    state: '/'
+                }} > Reviews
+            </NavLink>
+            
+            <Route
+                path="/movies/:movieId/:reviews"
+                className={styles.link}
+                activeClassName={styles.activeLink}>
+                {movie &&
+                    <Reviews movie={movie} />}
+            </Route> 
         </>
     )
 }

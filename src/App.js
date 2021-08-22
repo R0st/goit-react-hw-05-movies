@@ -5,7 +5,7 @@ import Container from './components/Container'
 import HomeView from './views/HomeView'
 import NotFoundView from './views/NotFoundView';
 import MovieDetailsView from './views/MovieDetailsView';
-// import MoviesCredits from './views/MoviesCredits'
+// import Cast from './views/Cast'
 
 
 export default function App() {

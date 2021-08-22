@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
-import * as movieApi from '../services/movieApi';
+// import * as movieApi from '../services/movieApi';
 import PageHeading from "../components/PageHeading/PageHeading";
-import { IMG } from '../services/movieApi';
+// import { IMG } from '../services/movieApi';
+import { fetchGetMoviesCredits, IMG } from '../services/movieApi';
 
 export default function Cast(movieId) {
-    const [credits, setCredits] = useState('');
+    const [credits, setCredits] = useState(null);
 
     useEffect(() => {
-        movieApi.fetchGetMoviesCredits(movieId).then(setCredits);
+        fetchGetMoviesCredits(movieId).then(setCredits);
     }, [movieId])
 
     return (

@@ -1,17 +1,34 @@
-import { useState, useEffect } from "react";
-import {  NavLink, useParams } from "react-router-dom";
+import { useState, useEffect, lazy, Suspense } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import PageHeading from "../components/PageHeading/PageHeading";
 import * as movieApi from '../services/movieApi';
 import { Route } from "react-router-dom";
-import Cast from "./Cast";
-import Reviews from "./Reviews";
+// import Cast from "./Cast";
+// import Reviews from "./Reviews";
 import styles from '../components/Navigation/Navigation.module.css'
+import { IMG} from '../services/movieApi'
+const Cast = lazy(() => import('./Cast'/*webpackChunkName: "cast" */))
+const Reviews = lazy(() => import('./Reviews'/*webpackChunkName: "reviews" */))
 
 export default function MovieDetailsView() {
     
     const [movie, setMovie] = useState(null);
-    const {movieId} = useParams();
-    // console.log(movieId)
+    const { movieId } = useParams();
+    const history = useHistory();
+    const location = useLocation();
+    // console.log(history)
+    // console.log(location);
+    
+    const searchQuery = new URLSearchParams(location.search).get('query')
+    console.log(searchQuery)
+    useEffect(() => {
+        if (location.searchQuery !== '') {
+            return;
+        }
+
+    })
+
 
     useEffect(() => {
         movieApi.fetchGetMoviesDetails(movieId).then(setMovie);
@@ -23,7 +40,7 @@ export default function MovieDetailsView() {
             <PageHeading text={`Movie ${movieId}`} />
             {movie && ( 
                 <>
-                    <img src={movie.poster_path} alt={movie.title} />
+                    <img src={IMG+movie.poster_path} alt={movie.title} />
                     <h2>{movie.title}</h2>
                     <p>Release date: {movie.release_date}</p>
                     <p>Rating: {movie.vote_average}</p>
@@ -33,35 +50,38 @@ export default function MovieDetailsView() {
             <hr />
 
             {/* <NavLink to="/movies/:movieId/:cast">Cast</NavLink> */}
+            <Suspense fallback={<h2>LOADING...</h2>}>
+                <NavLink
+                    to={{
+                        pathname: `/movies/${movieId}/cast`,
+                        state: '/'
+                    }} > Cast
+                </NavLink>
 
-            <NavLink
-                to={{
-                    pathname: `/movies/${movieId}/cast`,
-                    state: '/'
-                }} > Cast
-            </NavLink>
+                <Route
+                    path="/movies/:movieId/:cast"
+                    className={styles.link}
+                    activeClassName={styles.activeLink}>
+                    {movie && <Cast movieId={movieId} />}
+                </Route>
 
-            <Route
-                path="/movies/:movieId/:cast"
-                className={styles.link}
-                activeClassName={styles.activeLink}>
-                {movie && <Cast movie={movie} />}
-            </Route>
-
-            <NavLink
-                to={{
-                    pathname: `/movies/${movieId}/reviews`,
-                    state: '/'
-                }} > Reviews
-            </NavLink>
-            
-            <Route
-                path="/movies/:movieId/:reviews"
-                className={styles.link}
-                activeClassName={styles.activeLink}>
-                {movie &&
-                    <Reviews movie={movie} />}
-            </Route> 
+                <NavLink
+                    to={{
+                        pathname: `/movies/${movieId}/reviews`,
+                        state: '/'
+                    }} > Reviews
+                </NavLink>
+                
+                <Route
+                    // path="/movies/:movieId/:reviews"
+                    path={`/movies/${movieId}/reviews`}
+                    className={styles.link}
+                    activeClassName={styles.activeLink}>
+                    {movie &&
+                        <Reviews movieId={movieId} />}
+                </Route>
+            </Suspense>
+             
         </>
     )
 }

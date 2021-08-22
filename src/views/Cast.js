@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import * as movieApi from '../services/movieApi';
 import PageHeading from "../components/PageHeading/PageHeading";
+import { IMG } from '../services/movieApi';
 
 export default function Cast(movieId) {
     const [credits, setCredits] = useState('');
@@ -16,14 +17,14 @@ export default function Cast(movieId) {
                <ul>
                 {credits.map(cast => (
                     <li key={cast.id}>
-                        <img src={cast.profile_path} alt={cast.name} />
+                        <img src={IMG + cast.profile_path} alt={cast.name} />
+                        <p>{ cast.name}</p>
                     </li>
-                ))
+                    ))
+                }
+                </ul> 
+                )
             }
-            </ul> 
-            )
-                
-}
         </>
     )
 }
@@ -36,16 +37,4 @@ export default function Cast(movieId) {
 //     const cast = movie.find(movie => movie.id === movieId);
 
 //     return <>Cast {movieId} </>
-// }
-
-
-// export default function Cast({ movies }) {
-//     const { movieId } = useParams();
-//     const movie = movies.find(movie => movie.id === Number(movieId));
-    
-//     return (
-//         <>
-//             Cast 
-//         </>
-//     )
 // }

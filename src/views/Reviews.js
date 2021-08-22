@@ -1,25 +1,43 @@
 import { useState, useEffect } from "react";
 import * as movieApi from '../services/movieApi';
 
-
-export default function Reviews(movieId) {
+export default function Reviews({ movieId }) {
     const [movie, setMovie] = useState([]);
 
     useEffect(() => {
-        movieApi.fetchGetMoviesRewiews(movieId).then(setMovie);
+        // movieApi.fetchGetMoviesCredits(movieId).then(console.log).then(data=>setMovie(data.results));
+        movieApi.fetchGetMoviesRewiews(movieId)
+            // .then(console.log)
+            .then(data => setMovie(data.results))
+        
     }, [movieId])
-
+ 
     return (
         <>
             {/* <h2>{movie.title}</h2> */}
-            
-            <ul>
-                    {movie.map(review =>(
-                        <li key={review.id}>
-                            <img src={review.profile_path} alt={review.name} />
-                        </li>
-                    ))}
-                </ul>
-            </>
+            {movie.length > 0 
+                ? (
+                    <ul>
+                        {movie.map(review => 
+                            // return console.log(review);
+                            (<li key={review.id}>
+                                <p>{ review.author}</p>
+                                <p>{ review.content}</p>
+                            </li>
+                        ))}
+                    </ul>)
+                : (<h3>We don't have any reviews for this movie</h3>)}
+            {/* {movie.length > 0 && 
+                <ul>
+                        {movie.map(review => 
+                            (<li key={review.id}>
+                                <p>{ review.author}</p>
+                                <p>{ review.content}</p>
+                            </li>)
+                        )}
+                </ul>}
+            <h3>We don't have any reviews for this movie</h3> */}
+        </>
     )
 }
+

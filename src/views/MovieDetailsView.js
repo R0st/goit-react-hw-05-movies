@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { NavLink, Switch, useParams, useHistory, useLocation, useRouteMatch, Route} from "react-router-dom";
-import PageHeading from "../components/PageHeading/PageHeading";
+// import PageHeading from "../components/PageHeading/PageHeading";
 import { fetchGetMoviesDetails, IMG } from '../services/movieApi';
 // import Cast from "./Cast";
 // import Reviews from "./Reviews";
@@ -16,24 +16,22 @@ export default function MovieDetailsView() {
     const location = useLocation();
     const { url, path } = useRouteMatch();
     // console.log(history)
-    // console.log(location);
-    
-    const searchQuery = new URLSearchParams(location.search).get('query')
-    console.log(searchQuery)
-    useEffect(() => {
-        if (location.searchQuery !== '') {
-            return;
-        }
-    })
+    // console.log('location:' , location);
     
     useEffect(() => {
         fetchGetMoviesDetails(movieId).then(setMovie);
     }, [movieId])
     
+    const onGoBack = () => {
+        history.push(location?.state?.from ?? '/movies' );
+    }
+
     return (
         <>
+            <button type="button" onClick={onGoBack} className="Button">Go Back</button>
             {/* <PageHeading text={`Movie ${movieId}`} /> */}
-            <PageHeading text={`Movie ${movieId}`} />
+            {/* <PageHeading text={`Movie ${movieId}`} /> */}
+
             {movie && ( 
                 <>
                     <img src={IMG+movie.poster_path} alt={movie.title} />
@@ -50,7 +48,7 @@ export default function MovieDetailsView() {
                 <NavLink
                     to={{
                         pathname: `${url}/cast`,
-                        state: { from: location?.state?.from }
+                        state: { from:  location?.state?.from}
                         // pathname: `/movies/${movieId}/cast`,
                         // state: '/'
                     }} > Cast

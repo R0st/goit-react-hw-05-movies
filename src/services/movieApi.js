@@ -14,8 +14,8 @@ export function fetchTrendingMovies() {
     return fetchWithErrorHanding(`https://api.themoviedb.org/3/trending/movie/day?api_key=${KEY}`)
 }
 
-export function fetchSearchMovies() {
-    return fetchWithErrorHanding(`https://api.themoviedb.org/3/search/movie?api_key=${KEY}&language=en-US&page=1&include_adult=false`)
+export function fetchSearchMovies(query) {
+    return fetchWithErrorHanding(`https://api.themoviedb.org/3/search/movie?api_key=${KEY}&query=${query}&language=en-US&page=1&include_adult=false`)
 }
 
 export function fetchGetMoviesDetails(movieId) {

@@ -4,8 +4,10 @@ import * as movieApi from '../services/movieApi';
 export default function Reviews({ movieId }) {
     const [movie, setMovie] = useState([]);
 
-    useEffect(() => {movieApi.fetchGetMoviesRewiews(movieId).then(data => setMovie(data.results))
-        
+    useEffect(() => {
+        movieApi.fetchGetMoviesRewiews(movieId).then(data => {
+            setMovie(data.results);
+        })
     }, [movieId])
  
     return (

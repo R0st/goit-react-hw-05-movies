@@ -38,7 +38,7 @@ export default function MovieDetailsView() {
                    <img
                         src={IMG + movie.poster_path}
                         alt={movie.title}
-                        // className={ styles.imgMovie}
+                        className={ styles.imgMovie}
                         />
                         
                         <div className="DescMovie">
@@ -60,7 +60,7 @@ export default function MovieDetailsView() {
                         // state: '/'
                     }}
                     className={styles.link}
-                activeClassName={styles.activeLink}
+                    activeClassName={styles.activeLink}
                 > Cast
                 </NavLink>
                 <br/>  
@@ -71,7 +71,6 @@ export default function MovieDetailsView() {
                         // pathname: `/movies/${movieId}/reviews`,
                         // state: '/'
                     }}
-                    
                     className={styles.link}
                     activeClassName={styles.activeLink}
                     > Reviews
@@ -79,22 +78,15 @@ export default function MovieDetailsView() {
             
             <Suspense fallback={<h2>LOADING...</h2>}>
                 <Switch>
-                    <Route path={`${path}/cast`}
-                        // path="/movies/:movieId/:cast"
-                        >
+                    <Route path={`${path}/cast`}>
                         <Cast movieId={movieId} />
                     </Route>
 
-                    <Route
-                        path={`${path}/reviews`}
-                        // path="/movies/:movieId/:reviews"
-                        // path={`/movies/${movieId}/reviews`}
-                        >
+                    <Route path={`${path}/reviews`}>
                         <Reviews movieId={movieId} />
                     </Route>
                 </Switch>
-            </Suspense>
-             
+            </Suspense> 
         </>
     )
 }

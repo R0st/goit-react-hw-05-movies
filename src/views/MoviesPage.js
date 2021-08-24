@@ -54,11 +54,6 @@ export default function MoviesView() {
                                     />
                                     : <img src={defaultAvatar} alt={movie.title} width={300}/>
                                 }
-                                        {/* // {actor.profile_path ? <img src={`${IMG}${actor.profile_path}`} alt={actor.name} /> : */}
-                                        {/* //     <img src={defaultAvatar} alt={actor.name} />}
-                                        // src={IMG + movie.poster_path}
-                                        // alt={movie.title}
-                                        // width={300} />} */}
                         <p>{movie.title}</p>
                 </Link>
             </li>

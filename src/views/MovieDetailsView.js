@@ -28,30 +28,40 @@ export default function MovieDetailsView() {
 
     return (
         <>
-            <button type="button" onClick={onGoBack} className="Button">Go Back</button>
+            <button type="button" onClick={onGoBack} className={styles.Button}>Go Back</button>
             {/* <PageHeading text={`Movie ${movieId}`} /> */}
             {/* <PageHeading text={`Movie ${movieId}`} /> */}
 
-            {movie && ( 
+            <div className="DetailsMovie">
+                {movie && ( 
                 <>
-                    <img src={IMG+movie.poster_path} alt={movie.title} />
-                    <h2>{movie.title}</h2>
-                    <p>Release date: {movie.release_date}</p>
-                    <p>Rating: {movie.vote_average}</p>
-                    <p>Overview: {movie.overview}</p>
+                   <img
+                        src={IMG + movie.poster_path}
+                        alt={movie.title}
+                        // className={ styles.imgMovie}
+                        />
+                        
+                        <div className="DescMovie">
+                            <h2>{movie.title}</h2>
+                            <p>Release date: {movie.release_date}</p>
+                            <p>Rating: {movie.vote_average}</p>
+                            <p>Overview: {movie.overview}</p>
+                        </div>
                 </>
             )}
+            </div>
             <hr />
-
-            {/* <NavLink to="/movies/:movieId/:cast">Cast</NavLink> */}
             
                 <NavLink
                     to={{
                         pathname: `${url}/cast`,
-                        state: { from:  location?.state?.from}
+                        state: { from: location?.state?.from }
                         // pathname: `/movies/${movieId}/cast`,
                         // state: '/'
-                    }} > Cast
+                    }}
+                    className={styles.link}
+                activeClassName={styles.activeLink}
+                > Cast
                 </NavLink>
                 <br/>  
                 <NavLink 
@@ -60,27 +70,27 @@ export default function MovieDetailsView() {
                         state: { from: location?.state?.from }
                         // pathname: `/movies/${movieId}/reviews`,
                         // state: '/'
-                    }} > Reviews
+                    }}
+                    
+                    className={styles.link}
+                    activeClassName={styles.activeLink}
+                    > Reviews
                 </NavLink>
             
             <Suspense fallback={<h2>LOADING...</h2>}>
                 <Switch>
                     <Route path={`${path}/cast`}
                         // path="/movies/:movieId/:cast"
-                        className={styles.link}
-                        activeClassName={styles.activeLink}>
-                        {/* {movie && */}
-                            <Cast movieId={movieId} />
+                        >
+                        <Cast movieId={movieId} />
                     </Route>
 
                     <Route
                         path={`${path}/reviews`}
                         // path="/movies/:movieId/:reviews"
                         // path={`/movies/${movieId}/reviews`}
-                        className={styles.link}
-                        activeClassName={styles.activeLink}>
-                        {/* {movie && */}
-                            <Reviews movieId={movieId} />
+                        >
+                        <Reviews movieId={movieId} />
                     </Route>
                 </Switch>
             </Suspense>
